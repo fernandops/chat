@@ -1,0 +1,40 @@
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+/bin/
+/target/
+
+
+# Dependency directory
+# Removing npm directories. Some information here: 
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
+node_modules
+npm
+
+# Grunt related
+.grunt
+
+# IDE and MacOSX specific
+.idea
+.DS_Store
+
+# Development and testing logs
+logs
+*.log
+tests/*log.xml
+
+
+
+# Eclipse
+.classpath
+.project
+.settings/
