@@ -31,3 +31,10 @@ npm
 logs
 *.log
 tests/*log.xml
+
+
+
+# Eclipse
+.classpath
+.project
+.settings/
