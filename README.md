@@ -25,3 +25,12 @@ npm start
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 npm start
+
+# run (ubuntu)
+
+sudo apt-get install nodejs
+
+Caso não exista o comando 'node' ('/usr/bin/node'), executar:
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+npm start
