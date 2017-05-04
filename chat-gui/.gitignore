@@ -38,3 +38,4 @@ tests/*log.xml
 .classpath
 .project
 .settings/
+.metadata

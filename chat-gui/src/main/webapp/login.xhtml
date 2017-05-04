@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Insert title here</title>
+	</head>
+
+	<body>
+	
+	    <h2>Login</h2>
+	    <h:form id="login">
+	        <h:panelGrid columns="3">
+	            <h:outputLabel for="username" value="Username:" />
+	            <h:inputText id="username" required="true" />
+	            <h:message for="username" />
+	
+	            <h:outputLabel for="password" value="Password" />
+	            <h:inputSecret id="password" required="true" />
+	            <h:message for="password" />
+	
+	            <h:outputLabel for="rememberMe" value="Remember Me" />
+	            <h:selectBooleanCheckbox id="rememberMe" />
+	            <h:panelGroup />
+	
+	            <h:panelGroup />
+	            <h:commandButton value="Login" />
+	            <h:panelGroup styleClass="error" rendered="#{not facesContext.validationFailed}">
+	                #{shiroLoginFailure}
+	            </h:panelGroup>
+	        </h:panelGrid>
+	    </h:form>
+	    
+	    <h:link outcome="newUser.xhtml">Cadastrar usuário</h:link>
+	
+	</body>
+</html>
