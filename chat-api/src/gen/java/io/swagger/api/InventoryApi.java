@@ -26,7 +26,7 @@ import javax.ws.rs.*;
 
 
 @io.swagger.annotations.Api(description = "the inventory API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-02T13:26:34.683Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-03T03:55:25.778Z")
 public class InventoryApi  {
    private final InventoryApiService delegate = InventoryApiServiceFactory.getInventoryApi();
 
@@ -34,7 +34,9 @@ public class InventoryApi  {
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "adds an inventory item", notes = "Adds an item to the system", response = void.class, tags={ "admins", })
+    @io.swagger.annotations.ApiOperation(value = "adds an inventory item", notes = "Adds an item to the system", response = void.class, authorizations = {
+        @io.swagger.annotations.Authorization(value = "BasicAuth")
+    }, tags={ "admins", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = void.class),
         
@@ -50,7 +52,9 @@ public class InventoryApi  {
     
     
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "searches inventory", notes = "By passing in the appropriate options, you can search for available inventory in the system ", response = InventoryItem.class, responseContainer = "List", tags={ "developers", })
+    @io.swagger.annotations.ApiOperation(value = "searches inventory", notes = "By passing in the appropriate options, you can search for available inventory in the system ", response = InventoryItem.class, responseContainer = "List", authorizations = {
+        @io.swagger.annotations.Authorization(value = "BasicAuth")
+    }, tags={ "developers", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = InventoryItem.class, responseContainer = "List"),
         

@@ -32,14 +32,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Sessionid1
+ * SessionIdRequest
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-02T13:26:34.683Z")
-public class Sessionid1   {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-03T03:55:25.778Z")
+public class SessionIdRequest   {
   @JsonProperty("sessionid")
   private String sessionid = null;
 
-  public Sessionid1 sessionid(String sessionid) {
+  public SessionIdRequest sessionid(String sessionid) {
     this.sessionid = sessionid;
     return this;
   }
@@ -48,7 +48,7 @@ public class Sessionid1   {
    * Get sessionid
    * @return sessionid
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "ABCD1234", required = true, value = "")
   public String getSessionid() {
     return sessionid;
   }
@@ -66,8 +66,8 @@ public class Sessionid1   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Sessionid1 sessionid1 = (Sessionid1) o;
-    return Objects.equals(this.sessionid, sessionid1.sessionid);
+    SessionIdRequest sessionIdRequest = (SessionIdRequest) o;
+    return Objects.equals(this.sessionid, sessionIdRequest.sessionid);
   }
 
   @Override
@@ -79,7 +79,7 @@ public class Sessionid1   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Sessionid1 {\n");
+    sb.append("class SessionIdRequest {\n");
     
     sb.append("    sessionid: ").append(toIndentedString(sessionid)).append("\n");
     sb.append("}");

@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
 import io.swagger.model.Contact;
-import io.swagger.model.Sessionid1;
+import io.swagger.model.SessionIdRequest;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -27,7 +27,7 @@ import javax.ws.rs.*;
 
 
 @io.swagger.annotations.Api(description = "the contacts API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-02T13:26:34.683Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-03T03:55:25.778Z")
 public class ContactsApi  {
    private final ContactsApiService delegate = ContactsApiServiceFactory.getContactsApi();
 
@@ -35,16 +35,18 @@ public class ContactsApi  {
     
     
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Listar contatos aplicando filtros opcionais", notes = "Listar contatos aplicando filtros opcionais", response = Contact.class, responseContainer = "List", tags={ "contatos", })
+    @io.swagger.annotations.ApiOperation(value = "Listar contatos aplicando filtros opcionais", notes = "Listar contatos aplicando filtros opcionais", response = Contact.class, responseContainer = "List", authorizations = {
+        @io.swagger.annotations.Authorization(value = "BasicAuth")
+    }, tags={ "contatos", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "ok", response = Contact.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "requisição inválida", response = Contact.class, responseContainer = "List") })
-    public Response listOnlineContacts(@ApiParam(value = "" ,required=true) Sessionid1 sessionid
+    public Response listContacts(@ApiParam(value = "" ,required=true) SessionIdRequest sessionid
 ,@ApiParam(value = "Filtra pelo status do contato. Valores válidos são: Online / Offline", allowableValues="Online, Offline") @QueryParam("status") String status
 ,@ApiParam(value = "Filtra pela substring do userid do contato.") @QueryParam("useridLike") String useridLike
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.listOnlineContacts(sessionid,status,useridLike,securityContext);
+        return delegate.listContacts(sessionid,status,useridLike,securityContext);
     }
 }
