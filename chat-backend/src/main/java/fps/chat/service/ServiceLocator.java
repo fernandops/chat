@@ -12,6 +12,7 @@ public class ServiceLocator {
 		if (entityManagerFactory == null) {
 			synchronized (ServiceLocator.class) {
 				entityManagerFactory = Persistence.createEntityManagerFactory("MyJPAJAXRS");
+				new DataBaseInitializer(entityManagerFactory).populate();
 			}
 		}
 		return entityManagerFactory;
