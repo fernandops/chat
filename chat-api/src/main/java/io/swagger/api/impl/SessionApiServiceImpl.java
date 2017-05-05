@@ -2,8 +2,12 @@ package io.swagger.api.impl;
 
 import java.util.logging.Logger;
 
+import javax.persistence.NoResultException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
 import fps.chat.domain.Session;
@@ -18,8 +22,8 @@ public class SessionApiServiceImpl extends SessionApiService {
 
 	private Logger log = Logger.getLogger(SessionApiServiceImpl.class.getName());
 
-//    @Context
-//    private HttpServletRequest request;
+    @Context
+    private HttpServletRequest request;
 
     @Override
     public Response login(LoginRequest loginRequest, SecurityContext securityContext) throws NotFoundException {
@@ -35,11 +39,20 @@ public class SessionApiServiceImpl extends SessionApiService {
     		throw new IllegalArgumentException();
     	}
 
-    	User user = ServiceLocator.getUserService().getUser(userid, password.toCharArray());
+    	User user;
+		try {
+			user = ServiceLocator.getUserService().getUser(userid, password.toCharArray());
+		} catch (NoResultException e) {
+			return Response.status(Status.UNAUTHORIZED).build();
+		}
     	Session session = ServiceLocator.getSessionService().createSession(user);
     	
-    	
     	log.info("Created session '" + session.getSessionid() + "' with id " + session.getId());
-    	return Response.ok().entity(session.getSessionid()).build();
+    	
+		//request.getSession().setAttribute("sessionid", session.getSessionid());
+    	
+		return Response.ok()
+				//.header("Access-Control-Allow-Origin", "http://localhost:8000")
+				.entity(session.getSessionid()).build();
     }
 }
