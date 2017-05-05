@@ -101,7 +101,10 @@ public class ApiClient {
      */
     public static final String LENIENT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
-    private String basePath = "https://virtserver.swaggerhub.com/fernandops/ChatApp/1.0.0";
+    //TODO Verificar se isto pode ser configurado no Swagger antes da geração do código
+//    private String basePath = "https://virtserver.swaggerhub.com/fernandops/ChatApp/1.0.0";
+    private String basePath = "http://localhost:8080/chat-gui-1.0/api";
+
     private boolean lenientOnJson = false;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
