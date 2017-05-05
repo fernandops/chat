@@ -49,3 +49,8 @@ input{
   float: right;
   height: 10px;
 }
+
+input[type="button"], input[type="submit"] {
+  float: right;
+  height: 20px;
+}

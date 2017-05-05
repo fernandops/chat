@@ -16,11 +16,12 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 }])
 
 // Controller definition for this module
-.controller('LoginController', function($scope,$http,$timeout) {
+.controller('LoginController', function($scope, $rootScope, $http, $timeout, $window) {
 
 		// Global variables for this controller
 		var responseStatus = '';
 		var userIp = 'not yet retrieved';
+		var sessionid = '';
 
 		// Just a housekeeping.
 		// In the init method we are declaring all the
@@ -61,6 +62,43 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 
 		};
 
+		$scope.submitLogin = function() {
+
+			var body = {"user": $scope.userid, "password": $scope.password};
+
+			return $http.post('http://localhost:8080/chat-gui-1.0/api/session/login', body).then(function(response) {
+		    	// this callback will be called asynchronously
+		    	// when the response is available
+		    	responseStatus = response.status;
+		    	sessionid = response.data;
+		    	console.log(sessionid);
+		    	console.log(JSON.stringify(response.data));
+	
+				sessionStorage.setItem('sessionid', sessionid);
+
+				console.log("Login realizado com sucesso, emitindo evento 'loginEvent'...");
+				$scope.$emit('loginEvent', 'logged');
+				//$scope.$broadcast('loginEvent', 'logged');
+				//$rootScope.$broadcast('loginEvent', 'logged');
+				
+				$window.location.href = '#/contatos';
+				
+				// assigning sessionid to scope
+		    	return $scope.sessionid = sessionid;
+
+			}, function(errorResponse) {
+		    	// called asynchronously if an error occurs
+		    	// or server returns response with an error status.
+		    	responseStatus = errorResponse.status;
+		    	console.log(JSON.stringify(errorResponse));
+	
+				sessionStorage.removeItem('sessionid');
+
+				// clearing sessionid
+		    	return $scope.sessionid = '';
+			});
+		};
+		
 		this.message = "Login Time!";
 		
 		// // Adding small delay for IP address to be populated before loading the view

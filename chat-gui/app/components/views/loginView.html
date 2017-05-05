@@ -3,16 +3,16 @@
 	<div>This is Login View</div>
 	<div>You are logging in from this IP: <strong>{{userip}}</strong></div>
 	<br />
-	<form action="#" method="post">
+	<form method="post" ng-submit="submitLogin()">
 		Please Enter:<br /><br />
 		<div>
 		    <label for="userid">Usuário:</label>
-		    <input type="text" id="userid" />
+		    <input type="text" id="userid" ng-model="userid" required />
 		</div>
 		<div>
 		    <label for="password">Senha:</label>
-		    <input type="password" id="password" />
+		    <input type="password" id="password" ng-model="password" required />
 		</div>
-		<input type="submit"/>
+		<input type="submit" value="Login"/>
 	</form>
 </div>

@@ -1,0 +1,22 @@
+<div class="center" ng-controller="ContatosController">
+	<div>AngularJS starter application</div>
+	<div>This is Contatos View</div>
+	<br />
+
+	<table class="table">
+		<tbody>
+			<tr ng-repeat="c in contacts" ng-click="selectContact(c)">
+				<td>{{c.userid}}</td>
+				<td>{{c.name}}</td>
+				<td>{{c.status}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<br/>
+	
+	<div>Contato selecionado: [{{selectedContact.status}}] {{selectedContact.name}}
+
+	<!--div ng-show="{{selectedContact == null}}">Nenhum contato selecionado</div>
+	<div ng-show="{{selectedContact != null}}">Contato selecionado: [{{selectedContact.status}}] {{selectedContact.name}}</div-->
+</div>

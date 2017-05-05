@@ -2,7 +2,7 @@
 
 // Defining Angular app model with all other dependent modules
 var mostPopularListingsApp = angular.module('mostPopularListingsApp',['ngRoute',
-	'mostPopularListingsApp.home','mostPopularListingsApp.about','mostPopularListingsApp.login']);
+	'mostPopularListingsApp.home','mostPopularListingsApp.about','mostPopularListingsApp.login','mostPopularListingsApp.contatos']);
 
 mostPopularListingsApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 	
@@ -19,4 +19,10 @@ mostPopularListingsApp.config(function($routeProvider, $locationProvider, $httpP
 	// 		enabled: true,
 	//      requireBase: false
 	// });
+});
+
+
+mostPopularListingsApp.service('StateService', function () {
+    //this.square = function (a) { return a*a};
+	//this.users = ['John', 'James', 'Jake'];
 });
