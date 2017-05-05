@@ -30,6 +30,7 @@ public class UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
+			throw new RuntimeException(e);
 		}
 		return user;
 	}

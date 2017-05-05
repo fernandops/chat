@@ -26,6 +26,8 @@ public class SessionService {
 		
 		em.getTransaction().begin();
 		try {
+			int deleteCount = em.createQuery("delete from Session where user = :user").setParameter("user", user).executeUpdate();
+			System.out.println("Deleted " + deleteCount + " rows before new login");
 			session = new Session();
 			session.setUser(user);
 			session.setSessionid(sessionid);
@@ -37,13 +39,14 @@ public class SessionService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
+			throw new RuntimeException(e);
 		}
 		return session;
 	}
 
 
 	private String generateSessionId(User user) {
-		//TODO melhorar formato
+		//TODO problema de segurança com este formato do token
 		return "SID=" + user.getUserid() + "_" + user.getPassword();
 	}
 }
