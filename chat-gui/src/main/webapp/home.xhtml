@@ -8,7 +8,14 @@
 
 	<body>
 	
-	    <h2>Welcome home!</h2>
+		<h2>Welcome home!</h2>
+		
+		<h:dataTable value="#{contactsBean.onlineContacts}" var="c">
+			<h:column>#{c.userid}</h:column>
+			<h:column>#{c.name}</h:column>
+			<h:column>#{c.status}</h:column>
+		</h:dataTable>
 	
+		<h:commandLink action="#{loginBean.logout}" value="Logout"></h:commandLink>
 	</body>
 </html>

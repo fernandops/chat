@@ -12,19 +12,19 @@
 	    <h:form id="login">
 	        <h:panelGrid columns="3">
 	            <h:outputLabel for="username" value="Username:" />
-	            <h:inputText id="username" required="true" />
+	            <h:inputText id="username" required="true" value="#{loginBean.username}" />
 	            <h:message for="username" />
 	
 	            <h:outputLabel for="password" value="Password" />
-	            <h:inputSecret id="password" required="true" />
+	            <h:inputSecret id="password" required="true" value="#{loginBean.password}" />
 	            <h:message for="password" />
 	
 	            <h:outputLabel for="rememberMe" value="Remember Me" />
-	            <h:selectBooleanCheckbox id="rememberMe" />
+	            <h:selectBooleanCheckbox id="rememberMe" value="#{loginBean.rememberMe}" />
 	            <h:panelGroup />
 	
 	            <h:panelGroup />
-	            <h:commandButton value="Login" />
+	            <h:commandButton value="Login" action="#{loginBean.login}"/>
 	            <h:panelGroup styleClass="error" rendered="#{not facesContext.validationFailed}">
 	                #{shiroLoginFailure}
 	            </h:panelGroup>
