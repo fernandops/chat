@@ -13,7 +13,7 @@ import io.swagger.api.NotFoundException;
 import io.swagger.model.Contact;
 import io.swagger.model.Contact.StatusEnum;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-03T03:55:25.778Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
 public class ContactsApiServiceImpl extends ContactsApiService {
     @Override
     public Response contactsOptions(SecurityContext securityContext) throws NotFoundException {

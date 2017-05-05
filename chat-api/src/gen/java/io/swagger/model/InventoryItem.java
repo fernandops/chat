@@ -35,7 +35,7 @@ import io.swagger.model.Manufacturer;
 /**
  * InventoryItem
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T06:12:34.548Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
 public class InventoryItem   {
   @JsonProperty("id")
   private String id = null;

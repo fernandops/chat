@@ -13,11 +13,12 @@ import javax.ws.rs.core.SecurityContext;
 import fps.chat.domain.Session;
 import fps.chat.domain.User;
 import fps.chat.service.ServiceLocator;
+import io.swagger.api.ApiResponseMessage;
 import io.swagger.api.NotFoundException;
 import io.swagger.api.SessionApiService;
 import io.swagger.model.LoginRequest;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-03T03:55:25.778Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
 public class SessionApiServiceImpl extends SessionApiService {
 
 	private Logger log = Logger.getLogger(SessionApiServiceImpl.class.getName());
@@ -54,5 +55,13 @@ public class SessionApiServiceImpl extends SessionApiService {
 		return Response.ok()
 				//.header("Access-Control-Allow-Origin", "http://localhost:8000")
 				.entity(session.getSessionid()).build();
+    }
+    @Override
+    public Response sessionLoginOptions(SecurityContext securityContext) throws NotFoundException {
+        // do some magic!
+        return Response.ok()
+				.header("Access-Control-Allow-Headers", "sessionid")
+				.header("Access-Control-Allow-Origin", "http://localhost:8000")
+        		.build();
     }
 }

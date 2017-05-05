@@ -27,7 +27,7 @@ import javax.ws.rs.*;
 
 
 @io.swagger.annotations.Api(description = "the session API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T06:12:34.548Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
 public class SessionApi  {
    private final SessionApiService delegate = SessionApiServiceFactory.getSessionApi();
 
@@ -44,5 +44,18 @@ public class SessionApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.login(loginRequest,securityContext);
+    }
+    @OPTIONS
+    @Path("/login")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "", notes = "", response = void.class, authorizations = {
+        @io.swagger.annotations.Authorization(value = "BasicAuth")
+    }, tags={ "autenticação", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK", response = void.class) })
+    public Response sessionLoginOptions(@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.sessionLoginOptions(securityContext);
     }
 }
