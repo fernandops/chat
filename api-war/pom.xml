@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>fps</groupId>
+  <artifactId>api-war</artifactId>
+  <version>1.0</version>
+  <packaging>war</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9.1</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/gen/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <servlet.version>3.1.0</servlet.version>
+        <jsf.version>2.2.14</jsf.version>
+        <primefaces.version>6.0</primefaces.version>
+
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <jetty-maven-plugin.version>9.4.0.M0</jetty-maven-plugin.version>
+
+		<!-- swagger-jaxrs-server -->
+		<java.version>1.7</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<swagger-core-version>1.5.9</swagger-core-version>
+		<jetty-version>9.2.9.v20150224</jetty-version>
+		<jersey2-version>2.22.2</jersey2-version>
+		<junit-version>4.12</junit-version>
+		<logback-version>1.1.7</logback-version>
+		<servlet-api-version>2.5</servlet-api-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+  <dependencies>
+  	<dependency>
+  		<groupId>io.swagger</groupId>
+  		<artifactId>swagger-jaxrs-server</artifactId>
+  		<version>1.0.0</version>
+  	</dependency>
+
+        <!-- Servlet -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+		<dependency>
+			<groupId>fps</groupId>
+			<artifactId>chat-backend</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.7.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.195</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-java-client</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+  </dependencies>
+</project>
