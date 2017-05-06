@@ -60,7 +60,7 @@ public class SessionApiServiceImpl extends SessionApiService {
     public Response sessionLoginOptions(SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok()
-				.header("Access-Control-Allow-Headers", "sessionid")
+//				.header("Access-Control-Allow-Headers", "sessionid")
 				.header("Access-Control-Allow-Origin", "http://localhost:8000")
         		.build();
     }
