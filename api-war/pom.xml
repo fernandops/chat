@@ -91,10 +91,10 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.195</version>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-java-client</artifactId>
 			<version>1.0.0</version>
-		</dependency>
+		</dependency-->
   </dependencies>
 </project>
