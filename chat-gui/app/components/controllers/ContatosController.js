@@ -60,7 +60,7 @@ angular.module('mostPopularListingsApp.contatos', ['ngRoute'])
 		}
 
 		function carregarContatos() {
-			return $http.get('http://localhost:8080/chat-gui-1.0/api/contacts?status=ZZZ&useridLike=ZZZ',
+			return $http.get('http://localhost:8080/api-war-1.0/api/contacts?status=ZZZ&useridLike=ZZZ',
 					{headers: {"sessionid": sessionStorage.getItem('sessionid')}}
 			).then(function(response) {
 				responseStatus = response.status;

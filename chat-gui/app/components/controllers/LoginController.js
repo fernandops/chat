@@ -66,7 +66,7 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 
 			var body = {"user": $scope.userid, "password": $scope.password};
 
-			return $http.post('http://localhost:8080/chat-gui-1.0/api/session/login', body).then(function(response) {
+			return $http.post('http://localhost:8080/api-war-1.0/api/session/login', body).then(function(response) {
 		    	// this callback will be called asynchronously
 		    	// when the response is available
 		    	responseStatus = response.status;
