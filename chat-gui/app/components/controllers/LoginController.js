@@ -21,7 +21,7 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 		// Global variables for this controller
 		var responseStatus = '';
 		var userIp = 'not yet retrieved';
-		var sessionid = '';
+		var sessionid = sessionStorage.getItem('sessionid');
 
 		// Just a housekeeping.
 		// In the init method we are declaring all the
@@ -62,6 +62,12 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 
 		};
 
+		$scope.submitLogout = function() {
+			// Logout front-end
+			sessionStorage.removeItem('sessionid');
+			//TODO Criar serviço para logout no servidor
+		}
+
 		$scope.submitLogin = function() {
 
 			var body = {"user": $scope.userid, "password": $scope.password};
@@ -81,7 +87,8 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 				//$scope.$broadcast('loginEvent', 'logged');
 				//$rootScope.$broadcast('loginEvent', 'logged');
 				
-				$window.location.href = '#/contatos';
+				// TODO Não redirecionar pois a atualização com a lista de contatos não está carregando corretamente
+				//$window.location.href = '#/contatos';
 				
 				// assigning sessionid to scope
 		    	return $scope.sessionid = sessionid;

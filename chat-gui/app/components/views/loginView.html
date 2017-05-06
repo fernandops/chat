@@ -1,18 +1,30 @@
-<div class="center">
+<div class="center" ng-controller="LoginController">
 	<div>AngularJS starter application</div>
 	<div>This is Login View</div>
 	<div>You are logging in from this IP: <strong>{{userip}}</strong></div>
 	<br />
-	<form method="post" ng-submit="submitLogin()">
-		Please Enter:<br /><br />
-		<div>
-		    <label for="userid">Usuário:</label>
-		    <input type="text" id="userid" ng-model="userid" required />
-		</div>
-		<div>
-		    <label for="password">Senha:</label>
-		    <input type="password" id="password" ng-model="password" required />
-		</div>
-		<input type="submit" value="Login"/>
-	</form>
+	
+	<div ng-show="sessionid">
+		Usuário logado!
+		<br/>
+		<a href="#/logout" ng-click="submitLogout()">Logout</a>
+	</div>
+	
+	<div ng-show="!sessionid">
+
+		<form method="post" ng-submit="submitLogin()">
+			Please Enter:<br /><br />
+			<div>
+			    <label for="userid">Usuário:</label>
+			    <input type="text" id="userid" ng-model="userid" required />
+			</div>
+			<div>
+			    <label for="password">Senha:</label>
+			    <input type="password" id="password" ng-model="password" required />
+			</div>
+			<input type="submit" value="Login"/>
+		</form>
+
+	</div>
+
 </div>
