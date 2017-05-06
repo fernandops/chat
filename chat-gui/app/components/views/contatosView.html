@@ -15,8 +15,17 @@
 
 	<br/>
 	
-	<div>Contato selecionado: [{{selectedContact.status}}] {{selectedContact.name}}
-
-	<!--div ng-show="{{selectedContact == null}}">Nenhum contato selecionado</div>
-	<div ng-show="{{selectedContact != null}}">Contato selecionado: [{{selectedContact.status}}] {{selectedContact.name}}</div-->
+	<div ng-show="!selectedContact">Nenhum contato selecionado</div>
+	<div ng-show="selectedContact">
+		Contato selecionado: [{{selectedContact.status}}] {{selectedContact.name}}
+		<br/>
+		<form method="post" ng-submit="submitEnviarMensagem()">
+			Enviar mensagem:<br /><br />
+			<div>
+			    <label for="userid">Mensagem:</label>
+			    <input type="text" id="content" ng-model="content" required />
+			</div>
+			<input type="submit" value="Enviar"/>
+		</form>
+	</div>
 </div>

@@ -8,10 +8,9 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import fps.chat.domain.Session;
 import fps.chat.domain.vo.ContactVO;
 
-public class ContactService {
+public class ContactService extends BaseService {
 
 	private EntityManagerFactory emFactory;
 
@@ -22,9 +21,8 @@ public class ContactService {
 	public List<ContactVO> listContacts(String sessionid, String status, String useridLike) {
 		EntityManager em = emFactory.createEntityManager();
 
-		Session session = em.createQuery("select s from Session s where s.sessionid = :sessionid", Session.class)
-				.setParameter("sessionid", sessionid).getSingleResult();
-		
+		requireSession(em, sessionid);
+
 		List<ContactVO> contactsForward = em.createQuery("select new fps.chat.domain.vo.ContactVO(cf.userid, cf.name, 'OFFLINE') from User u join u.contactsForward cf", ContactVO.class).getResultList();
 		List<ContactVO> contactsReverse = em.createQuery("select new fps.chat.domain.vo.ContactVO(cf.userid, cf.name, 'OFFLINE') from User u join u.contactsReverse cf", ContactVO.class).getResultList();
 

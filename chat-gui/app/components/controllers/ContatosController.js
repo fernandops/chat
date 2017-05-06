@@ -132,6 +132,26 @@ angular.module('mostPopularListingsApp.contatos', ['ngRoute'])
 
 		};
 
+		$scope.submitEnviarMensagem = function() {
+
+			var body = {
+			  "recipient": $scope.selectedContact.userid,
+			  "content": $scope.content,
+			  "sessionid": sessionStorage.getItem('sessionid')
+			};
+
+			return $http.post('http://localhost:8080/api-war-1.0/api/message', body,
+					{headers: {"sessionid": sessionStorage.getItem('sessionid')}}
+			).then(function(response) {
+		    	responseStatus = response.status;
+		    	console.log(JSON.stringify(response.data));
+				console.log("Mensagem enviada!");
+			}, function(errorResponse) {
+		    	responseStatus = errorResponse.status;
+		    	console.log(JSON.stringify(errorResponse));
+			});
+		};
+
 		this.message = "Login Time!";
 		
 		// // Adding small delay for IP address to be populated before loading the view

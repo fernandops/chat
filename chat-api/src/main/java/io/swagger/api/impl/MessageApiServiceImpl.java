@@ -14,6 +14,8 @@ import java.io.InputStream;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import fps.chat.service.ServiceLocator;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -27,6 +29,8 @@ public class MessageApiServiceImpl extends MessageApiService {
     @Override
     public Response sendMessage(SendMessageRequest sendMessageRequest, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+//        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    	ServiceLocator.getMessageService().sendMessage(sendMessageRequest.getRecipient(), sendMessageRequest.getContent(), sendMessageRequest.getSessionid());
+        return Response.ok().build();
     }
 }

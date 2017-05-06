@@ -31,4 +31,7 @@ public class ServiceLocator {
 	public static SessionService getSessionService() {
 		return new SessionService(getEMFactory());
 	}
+	public static MessageService getMessageService() {
+		return new MessageService(getEMFactory());
+	}
 }
