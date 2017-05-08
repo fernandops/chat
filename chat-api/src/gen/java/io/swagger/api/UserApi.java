@@ -26,7 +26,7 @@ import javax.ws.rs.*;
 
 
 @io.swagger.annotations.Api(description = "the user API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-06T07:34:56.998Z")
 public class UserApi  {
    private final UserApiService delegate = UserApiServiceFactory.getUserApi();
 
@@ -39,9 +39,9 @@ public class UserApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "ok", response = void.class),
         
         @io.swagger.annotations.ApiResponse(code = 403, message = "falha", response = void.class) })
-    public Response createUser(@ApiParam(value = "User credentials for authentication" ,required=true) CreateUserRequest loginRequest
+    public Response createUser(@ApiParam(value = "User credentials for authentication" ,required=true) CreateUserRequest newUserReq
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.createUser(loginRequest,securityContext);
+        return delegate.createUser(newUserReq,securityContext);
     }
 }

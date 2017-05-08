@@ -16,7 +16,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-06T07:34:56.998Z")
 public abstract class SessionApiService {
     public abstract Response login(LoginRequest loginRequest,SecurityContext securityContext) throws NotFoundException;
     public abstract Response sessionLoginOptions(SecurityContext securityContext) throws NotFoundException;

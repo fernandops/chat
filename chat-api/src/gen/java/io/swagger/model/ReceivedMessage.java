@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * ReceivedMessage
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-06T07:34:56.998Z")
 public class ReceivedMessage   {
   @JsonProperty("id")
   private Integer id = null;
@@ -44,6 +44,9 @@ public class ReceivedMessage   {
 
   @JsonProperty("content")
   private String content = null;
+
+  @JsonProperty("date")
+  private String date = null;
 
   public ReceivedMessage id(Integer id) {
     this.id = id;
@@ -99,6 +102,24 @@ public class ReceivedMessage   {
     this.content = content;
   }
 
+  public ReceivedMessage date(String date) {
+    this.date = date;
+    return this;
+  }
+
+   /**
+   * Get date
+   * @return date
+  **/
+  @ApiModelProperty(example = "01/01/0101", required = true, value = "")
+  public String getDate() {
+    return date;
+  }
+
+  public void setDate(String date) {
+    this.date = date;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -111,12 +132,13 @@ public class ReceivedMessage   {
     ReceivedMessage receivedMessage = (ReceivedMessage) o;
     return Objects.equals(this.id, receivedMessage.id) &&
         Objects.equals(this.sender, receivedMessage.sender) &&
-        Objects.equals(this.content, receivedMessage.content);
+        Objects.equals(this.content, receivedMessage.content) &&
+        Objects.equals(this.date, receivedMessage.date);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, sender, content);
+    return Objects.hash(id, sender, content, date);
   }
 
 
@@ -128,6 +150,7 @@ public class ReceivedMessage   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    sender: ").append(toIndentedString(sender)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
+    sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -9,7 +9,6 @@ import io.swagger.jaxrs.*;
 
 import io.swagger.model.ReceivedMessage;
 import io.swagger.model.SendMessageRequest;
-import io.swagger.model.SessionIdRequest;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -28,7 +27,7 @@ import javax.ws.rs.*;
 
 
 @io.swagger.annotations.Api(description = "the message API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-06T07:34:56.998Z")
 public class MessageApi  {
    private final MessageApiService delegate = MessageApiServiceFactory.getMessageApi();
 
@@ -43,7 +42,7 @@ public class MessageApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "OK", response = ReceivedMessage.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 204, message = "no messages", response = ReceivedMessage.class, responseContainer = "List") })
-    public Response retrievePendingMessages(@ApiParam(value = "" ,required=true) SessionIdRequest sessionid
+    public Response retrievePendingMessages(@ApiParam(value = "" ,required=true)@HeaderParam("sessionid") String sessionid
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.retrievePendingMessages(sessionid,securityContext);

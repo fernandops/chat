@@ -14,17 +14,20 @@ import java.io.InputStream;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import fps.chat.domain.vo.MessageVO;
 import fps.chat.service.ServiceLocator;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-05T23:06:23.817Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-06T07:34:56.998Z")
 public class MessageApiServiceImpl extends MessageApiService {
     @Override
-    public Response retrievePendingMessages(SessionIdRequest sessionid, SecurityContext securityContext) throws NotFoundException {
+    public Response retrievePendingMessages(String sessionid, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+//      return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();	
+    	List<MessageVO> messages = ServiceLocator.getMessageService().retrievePendingMessages(sessionid);
+      	return Response.ok().entity(messages).build();
     }
     @Override
     public Response sendMessage(SendMessageRequest sendMessageRequest, SecurityContext securityContext) throws NotFoundException {

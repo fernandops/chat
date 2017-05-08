@@ -16,8 +16,7 @@ angular.module('mostPopularListingsApp.contatos', ['ngRoute'])
 }])
 
 // Controller definition for this module
-.controller('ContatosController', function($scope, $rootScope, $http, $timeout, StateService) {
-
+.controller('ContatosController', function($scope, $rootScope, $http, $timeout, StateService, SessionService, ApiService) {
 		// Global variables for this controller
 		var responseStatus = '';
 		var userIp = 'not yet retrieved';
@@ -32,72 +31,60 @@ angular.module('mostPopularListingsApp.contatos', ['ngRoute'])
 
 		function init(){
 			
-			$scope.contacts = StateService.contacts;
-			$scope.selectedContact = StateService.selectedContact;
-			
+			$scope.contacts = ApiService.contacts();
+			$scope.pendingMessages = ApiService.pendingMessages();
+
+			if (SessionService.isLogged() && ($scope.pendingMessages == null || $scope.contacts == null)) {
+				
+				$scope.$on('$destroy', function() {
+					console.log('destroy: Child1 is no longer necessary');
+					$scope.destroyed = true;
+				});
+
+				var f = function() {
+					console.log('timer process!');
+					if ($scope.pendingMessages == null) {
+						$scope.pendingMessages = ApiService.pendingMessages;
+					}
+					if ($scope.contacts == null) {
+						$scope.contacts = ApiService.contacts;
+					}
+					if (SessionService.isLogged() && !$scope.destroyed && ($scope.pendingMessages == null || $scope.contacts == null)) {
+						console.log('scheduling timer process... [l]')
+						$timeout(f, 1500);
+					} else {
+						if (!SessionService.isLogged()) {
+							console.log('NOT scheduling timer process: user not logged in!');
+						} else if ($scope.destroyed) {
+							console.log('NOT scheduling timer process: controller was destroyed!');
+						} else {
+							console.log('NOT scheduling timer process: no more pendings');
+						}
+					}
+				};
+				
+				console.log('scheduling timer process... [i]')
+				$timeout(f, 1500);
+			}
+
 			$scope.selectContact = function (_c) {
 				$scope.selectedContact = _c;
 				StateService.selectedContact = _c;
 				console.log('Selecionado contato "' + _c.userid + '"');
 			}
 			
-			$scope.$on('loginEvent', function (event, data) {
-				console.log("[1] Recebido evento de Login realizado com sucesso! Carregando contatos...");
-				$timeout(function() {
-					console.log("[2] Recebido evento de Login realizado com sucesso! Carregando contatos...");
-					carregarContatos();
-					//$scope.$apply();
-				});
-			});
-			$rootScope.$on('loginEvent', function (event, data) {
-				console.log("[1] Recebido evento de Login realizado com sucesso! Carregando contatos...");
-				$timeout(function() {
-					console.log("[2] Recebido evento de Login realizado com sucesso! Carregando contatos...");
-					carregarContatos();
-					//$scope.$apply();
-				});
-			});
+			$scope.readMessage = function (_m, index) {
+				console.log('Reading message "' + _m + '"');
+				// show msg
+				var msg = '[' + _m.sender + ' às ' + _m.date + ']: ' + _m.content;
+				alert(msg);
+				// remove from local list
+				$scope.pendingMessages.splice(index, 1);
+			}
 		}
 
-		function carregarContatos() {
-			return $http.get('http://localhost:8080/api-war-1.0/api/contacts?status=ZZZ&useridLike=ZZZ',
-					{headers: {"sessionid": sessionStorage.getItem('sessionid')}}
-			).then(function(response) {
-				responseStatus = response.status;
-				console.log(JSON.stringify(response.data));
-				contacts = response.data;
-				$scope.contacts = contacts;
-				StateService.contacts = contacts;
-				return $scope.contacts = contacts;
-			}, function(errorResponse) {
-				responseStatus = errorResponse.status;
-				console.log(JSON.stringify(errorResponse));
-				contacts = [];
-				$scope.contacts = contacts;
-				StateService.contacts = contacts;
-				return $scope.contacts = contacts;
-			});
-
-			//TODO Não foi possível utilizar o gerador rest do Swagger para client javascript, portanto as chamadas estão sendo feitas manualmente.
-			/*
-			var ChatAppApi = require('chat_app_api');
-			var apiInstance = new MensagensApi();
-
-			var sessionid = new ChatAppApi.SessionIdRequest(); // SessionIdRequest | 
-
-			var opts = { 
-			  'status': "status_example", // String | Filtra pelo status do contato. Valores válidos são: Online / Offline
-			  'useridLike': "useridLike_example" // String | Filtra pela substring do userid do contato.
-			};
-
-			var callback = function(error, data, response) {
-			  if (error) {
-			    console.error(error);
-			  } else {
-			    console.log('API called successfully. Returned data: ' + data);
-			  }
-			};
-			apiInstance.listContacts(sessionid, opts, callback);*/
+		function carregarMensagensPendentes() {
+			$scope.pendingMessages = ApiService.pendingMessages;
 		}
 
 

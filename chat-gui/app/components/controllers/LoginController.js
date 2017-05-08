@@ -16,12 +16,14 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 }])
 
 // Controller definition for this module
-.controller('LoginController', function($scope, $rootScope, $http, $timeout, $window) {
+.controller('LoginController', function($scope, $rootScope, $http, $timeout, $window, $location, SessionService, ApiService) {
 
 		// Global variables for this controller
 		var responseStatus = '';
 		var userIp = 'not yet retrieved';
-		var sessionid = sessionStorage.getItem('sessionid');
+
+		//var sessionid = sessionStorage.getItem('sessionid');
+		var sessionid = $rootScope.sessionid;
 
 		// Just a housekeeping.
 		// In the init method we are declaring all the
@@ -63,47 +65,22 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 		};
 
 		$scope.submitLogout = function() {
-			// Logout front-end
-			sessionStorage.removeItem('sessionid');
-			//TODO Criar serviço para logout no servidor
+			SessionService.login();
+		}
+
+		$scope.isLogged = function() {
+			return SessionService.isLogged();
 		}
 
 		$scope.submitLogin = function() {
-
-			var body = {"user": $scope.userid, "password": $scope.password};
-
-			return $http.post('http://localhost:8080/api-war-1.0/api/session/login', body).then(function(response) {
-		    	// this callback will be called asynchronously
-		    	// when the response is available
-		    	responseStatus = response.status;
-		    	sessionid = response.data;
-		    	console.log(sessionid);
-		    	console.log(JSON.stringify(response.data));
-	
-				sessionStorage.setItem('sessionid', sessionid);
-
-				console.log("Login realizado com sucesso, emitindo evento 'loginEvent'...");
-				$scope.$emit('loginEvent', 'logged');
-				//$scope.$broadcast('loginEvent', 'logged');
-				//$rootScope.$broadcast('loginEvent', 'logged');
+			var afterLogin = function () {
+				ApiService.carregarMensagensPendentes();
+				ApiService.carregarContatos();
 				
-				// TODO Não redirecionar pois a atualização com a lista de contatos não está carregando corretamente
-				//$window.location.href = '#/contatos';
-				
-				// assigning sessionid to scope
-		    	return $scope.sessionid = sessionid;
+				$location.path('#/contatos');
+			};
 
-			}, function(errorResponse) {
-		    	// called asynchronously if an error occurs
-		    	// or server returns response with an error status.
-		    	responseStatus = errorResponse.status;
-		    	console.log(JSON.stringify(errorResponse));
-	
-				sessionStorage.removeItem('sessionid');
-
-				// clearing sessionid
-		    	return $scope.sessionid = '';
-			});
+			SessionService.login($scope.userid, $scope.password, afterLogin);
 		};
 		
 		this.message = "Login Time!";

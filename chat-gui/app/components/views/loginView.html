@@ -1,16 +1,16 @@
-<div class="center" ng-controller="LoginController">
+<div class="center">
 	<div>AngularJS starter application</div>
 	<div>This is Login View</div>
 	<div>You are logging in from this IP: <strong>{{userip}}</strong></div>
 	<br />
 	
-	<div ng-show="sessionid">
+	<div ng-show="isLogged()">
 		Usuário logado!
 		<br/>
 		<a href="#/logout" ng-click="submitLogout()">Logout</a>
 	</div>
 	
-	<div ng-show="!sessionid">
+	<div ng-show="!isLogged()">
 
 		<form method="post" ng-submit="submitLogin()">
 			Please Enter:<br /><br />
