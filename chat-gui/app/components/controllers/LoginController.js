@@ -5,7 +5,7 @@
 
 'use strict';
 
-angular.module('mostPopularListingsApp.login', ['ngRoute'])
+angular.module('mostPopularListingsApp.login', ['ngRoute', 'ngWebSocket'])
 
 // Routing configuration for this module
 .config(['$routeProvider',function($routeprovider){
@@ -16,7 +16,7 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 }])
 
 // Controller definition for this module
-.controller('LoginController', function($scope, $rootScope, $http, $timeout, $window, $location, SessionService, ApiService) {
+.controller('LoginController', function($scope, $rootScope, $http, $timeout, $window, $location, SessionService, ApiService, WebSocketService) {
 
 		// Global variables for this controller
 		var responseStatus = '';
@@ -78,6 +78,8 @@ angular.module('mostPopularListingsApp.login', ['ngRoute'])
 				ApiService.carregarContatos();
 				
 				$location.path('#/contatos');
+				
+				WebSocketService.startConnection();
 			};
 
 			SessionService.login($scope.userid, $scope.password, afterLogin);

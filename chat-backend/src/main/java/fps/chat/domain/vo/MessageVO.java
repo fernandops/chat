@@ -28,6 +28,9 @@ public class MessageVO {
 		return id.hashCode();
 	}
 
+	public String toJson () {
+		return "{\"id\":\"" + id + "\",\"sender\":\"" + sender + "\",\"content\":\"" + content + "\",\"date\":\"" + date + "\"}";
+	}
 	public String getId() {
 		return id;
 	}

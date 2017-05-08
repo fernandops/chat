@@ -9,7 +9,7 @@ mostPopularListingsApp.service('ApiService', function (SessionService, $http) {
 	this.contacts = function () { return _contacts; };
 
 	this.carregarMensagensPendentes = function () {
-		var body = {"sessionid": SessionService.state.sessionid};
+		var body = {"sessionid": SessionService.state().sessionid};
 		return $http.post('http://localhost:8080/api-war-1.0/api/message/retrievePendingMessages', body,
 				{headers: {"sessionid": sessionStorage.getItem('sessionid')}}
 		).then(function(response) {

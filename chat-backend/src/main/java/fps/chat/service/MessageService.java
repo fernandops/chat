@@ -23,6 +23,25 @@ public class MessageService extends BaseService {
 	public Message sendMessage(String recipientId, String content, String sessionid) {
 		EntityManager em = emFactory.createEntityManager();
 
+		Message message = createMessage(em, recipientId, content, sessionid);
+		
+		javax.websocket.Session wsSession = ServiceLocator.getSessionService().getUserWebSocketMap().get(recipientId);
+		if (wsSession != null && wsSession.isOpen()) {
+			// Destinatário online. Enviar msg via WebSocket
+			try {
+				System.out.println("ENVIANDO WEBSOCKET...");
+				wsSession.getBasicRemote().sendObject(new MessageVO(message));
+				System.out.println("ENVIANDO WEBSOCKET!");
+			} catch (Exception e) {
+				throw new IllegalStateException("Erro enviando mensagem via WebSocket", e);
+			}
+			// Em seguida atualizar o status como entregue para evitar que seja entregue novamente durante login
+			message.setStatus("read");
+			message = em.merge(message);
+		}
+		return message;
+	}
+	private Message createMessage(EntityManager em, String recipientId, String content, String sessionid) {
 		Session session = requireSession(em, sessionid);
 		User sender = session.getUser();
 		User recipient = requireUser(em, recipientId);
@@ -38,11 +57,6 @@ public class MessageService extends BaseService {
 			message.setContent(content);
 			message.setDate(now);
 			message.setStatus("pending");
-			boolean isRecipientOnline = false;
-			if (isRecipientOnline) {
-				//TODO ENTREGAR IMEDIATAMENTE SE O DESTINATARIO ESTIVER ONLINE!
-				message.setStatus("read");
-			}
 			em.persist(message);
 			em.flush();
 			em.getTransaction().commit();
