@@ -1,0 +1,389 @@
+swagger: '2.0'
+info:
+  description: ChatApp API
+  version: 1.0.0
+  title: ChatApp API
+  # put the contact info for your development or API team
+  contact:
+    email: you@your-company.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# all paths will be relative to the basePath specified
+# basePath: /v1
+
+# tags are used for organizing operations
+tags:
+- name: usuários
+  description: usuários
+- name: autenticação
+  description: autenticação
+- name: mensagens
+  description: mensagens
+- name: contatos
+  description: contatos
+schemes:
+- https
+
+security:
+- BasicAuth: []
+
+
+paths:
+
+  /user:
+    post:
+      security: []
+      operationId: createUser
+      summary: Criar novo usuário
+      description: Criar novo usuário
+      tags:
+      - usuários
+      parameters:
+      - name: newUserReq
+        in: body
+        description: User credentials for authentication
+        required: true
+        schema:
+          $ref: '#/definitions/CreateUserRequest'
+      responses:
+        200:
+          description: ok
+        403:
+          description: falha
+          schema:
+            type: string
+  /session/login:
+    options:
+      tags:
+      - autenticação
+      responses:
+        200:
+          description: OK
+          headers:
+            sessionid:
+              description: token de autenticação
+              type: string
+    post:
+      security: []
+      operationId: login
+      summary: Realizar login
+      description: Realizar login
+      tags:
+      - autenticação
+      parameters:
+      - name: loginRequest
+        in: body
+        description: User credentials for authentication
+        required: true
+        schema:
+          $ref: '#/definitions/LoginRequest'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/LoginSuccessResponse'
+        401:
+          description: Dados de acesso inválidos
+  /message/retrievePendingMessages:
+    post:
+      tags:
+      - mensagens
+      operationId: retrievePendingMessages
+      summary: Obter mensagens pendentes e removê-las da fila de pendentes
+      description: |
+        Obter mensagens pendentes e removê-las da fila de pendentes. Observação: Foi
+        usado POST devido à mudança de estado da fila de mensagens pendentes offline.
+      parameters:
+      - name: sessionid
+        in: header
+        required: true
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ReceivedMessage'
+        204:
+          description: no messages
+  /message:
+    post:
+      tags:
+      - mensagens
+      operationId: sendMessage
+      summary: Enviar mensagem
+      description: Enviar mensagem
+      parameters:
+      - name: sendMessageRequest
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/SendMessageRequest'
+      responses:
+        200:
+          description: OK
+        400:
+          description: requisição inválida
+  /contacts:
+    options:
+      tags:
+      - contatos
+      responses:
+        200:
+          description: OK
+          headers:
+            sessionid:
+              description: token de autenticação
+              type: string
+
+    get:
+      tags:
+      - contatos
+      operationId: listContacts
+      summary: Listar contatos aplicando filtros opcionais
+      description: Listar contatos aplicando filtros opcionais
+      produces:
+      - application/json
+      parameters:
+      - name: status
+        in: query
+        required: false
+        type: string
+        enum:
+        - Online
+        - Offline
+        description: "Filtra pelo status do contato. Valores válidos são: Online / Offline"
+      - name: useridLike
+        in: query
+        required: false
+        type: string
+        description: "Filtra pela substring do userid do contato."
+      - name: sessionid
+        in: header
+        required: true
+        type: string
+      responses:
+        200:
+          description: ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Contact'
+        400:
+          description: requisição inválida
+  /inventory:
+    get:
+      deprecated: true
+      tags:
+      - developers
+      summary: searches inventory
+      operationId: searchInventory
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: searchString
+        description: pass an optional search string for looking up inventory
+        required: false
+        type: string
+      - in: query
+        name: skip
+        description: number of records to skip for pagination
+        type: integer
+        format: int32
+        minimum: 0
+      - in: query
+        name: limit
+        description: maximum number of records to return
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 50
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/InventoryItem'
+        400:
+          description: bad input parameter
+    post:
+      deprecated: true
+      tags:
+      - admins
+      summary: adds an inventory item
+      operationId: addInventory
+      description: Adds an item to the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: inventoryItem
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/InventoryItem'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: http://petstore.swagger.io/oauth/dialog
+    flow: implicit
+    scopes:
+      write:pets: modify pets in your account
+      read:pets: read your pets
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+  BasicAuth:
+    type: basic
+
+definitions:
+  SessionIdRequest:
+    type: object
+    required:
+    - sessionid
+    properties:
+      sessionid:
+        type: string
+        example: ABCD1234
+  SendMessageRequest:
+    type: object
+    required:
+    - recipient
+    - content
+    - sessionid
+    properties:
+      recipient:
+        type: string
+        example: fulano
+        description: Destinatário (userid)
+      content:
+        type: string
+        example: Hello World!
+      sessionid:
+        type: string
+        example: ABCD1234
+  ReceivedMessage:
+    type: object
+    required:
+    - id
+    - sender
+    - content
+    - date
+    properties:
+      id:
+        type: integer
+        example: 15
+      sender:
+        type: string
+        example: fulano
+      content:
+        type: string
+        example: Hello World!
+      date:
+        type: string
+        example: 01/01/0101
+  Contact:
+    type: object
+    required:
+    - userid
+    - name
+    - status
+    properties:
+      userid:
+        type: string
+        example: fulano
+      name:
+        type: string
+        example: Fulano da Silva
+      status:
+        type: string
+        enum:
+        - Online
+        - Offline
+        example: Fulano da Silva
+  CreateUserRequest:
+    type: object
+    required:
+    - userid
+    - password
+    - name
+    - email
+    properties:
+      userid:
+        type: string
+      password:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+  LoginRequest:
+    type: object
+    properties:
+      user:
+        type: string
+      password:
+        type: string
+  LoginSuccessResponse:
+    type: object
+    properties:
+      sessionid:
+        type: string
+        description: Unique session ID post successful authentication.
+  InventoryItem:
+    type: object
+    required:
+    - id
+    - name
+    - manufacturer
+    - releaseDate
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Widget Adapter
+      releaseDate:
+        type: string
+        format: int32
+        example: 2016-08-29T09:12:33.001Z
+      manufacturer:
+        $ref: '#/definitions/Manufacturer'
+  Manufacturer:
+    required:
+    - name
+    properties:
+      name:
+        type: string
+        example: ACME Corporation
+      homePage:
+        type: string
+        format: url
+        example:  https://www.acme-corp.com
+      phone:
+        type: string
+        example: 408-867-5309
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /fernandops/ChatApp/1.0.0
