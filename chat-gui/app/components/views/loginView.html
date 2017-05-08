@@ -1,5 +1,4 @@
 <div class="center">
-	<div>AngularJS starter application</div>
 	<div>This is Login View</div>
 	<div>You are logging in from this IP: <strong>{{userip}}</strong></div>
 	<br />
@@ -13,7 +12,7 @@
 	<div ng-show="!isLogged()">
 
 		<form method="post" ng-submit="submitLogin()">
-			Please Enter:<br /><br />
+			Por favor preencha os campos:<br /><br />
 			<div>
 			    <label for="userid">Usuário:</label>
 			    <input type="text" id="userid" ng-model="userid" required />
@@ -23,6 +22,9 @@
 			    <input type="password" id="password" ng-model="password" required />
 			</div>
 			<input type="submit" value="Login"/>
+
+			<br/><br/>
+			<a href="#/register" ng-click="registerView()">Clique aqui para cadastrar novo usuário</a>
 		</form>
 
 	</div>

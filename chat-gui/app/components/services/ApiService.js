@@ -54,4 +54,22 @@ mostPopularListingsApp.service('ApiService', function (SessionService, $http) {
 		apiInstance.listContacts(sessionid, opts, callback);*/
 	};
 
+
+	this.submitRegisterUser = function (userid, password, name, email) {
+		var body = {
+		  "userid": userid,
+		  "password": password,
+		  "name": name,
+		  "email": email
+		};
+		return $http.post('http://localhost:8080/api-war-1.0/api/user', body
+		).then(function(response) {
+			console.log('[submitRegisterUser]: ' + JSON.stringify(response.data));
+			alert('Usuário cadastrado com sucesso!');
+		}, function(errorResponse) {
+			console.log('[submitRegisterUser]: ' + JSON.stringify(errorResponse));
+			alert('Erro ao cadastrar usuário: ' + errorResponse);
+		});
+	};
+
 });

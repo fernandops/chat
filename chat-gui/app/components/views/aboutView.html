@@ -1,4 +1,26 @@
 <div class="center">
-	<div>AngularJS starter application</div>
-	<div>This is About View</div>
+	<div>This is Register View</div>
+	<br/>
+	
+	<form method="post" ng-submit="submitRegisterUser()">
+		Por favor preencha os campos:<br /><br />
+		<div>
+		    <label for="userid">Usuário:</label>
+		    <input type="text" id="userid" ng-model="userid" required />
+		</div>
+		<div>
+		    <label for="password">Senha:</label>
+		    <input type="password" id="password" ng-model="password" required />
+		</div>
+		<div>
+		    <label for="name">Nome:</label>
+		    <input type="text" id="name" ng-model="name" required />
+		</div>
+		<div>
+		    <label for="email">Email:</label>
+		    <input type="text" id="email" ng-model="email" required />
+		</div>
+		<input type="submit" value="Criar usuário"/>
+	</form>
+
 </div>

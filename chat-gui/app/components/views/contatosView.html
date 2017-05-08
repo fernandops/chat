@@ -1,48 +1,53 @@
 <div class="center">
-	<div>AngularJS starter application</div>
 	<div>This is Contatos View</div>
 	<br />
 
-	<table class="table">
-		<tbody>
-			<tr ng-repeat="c in contacts" ng-click="selectContact(c)">
-				<td>{{c.userid}}</td>
-				<td>{{c.name}}</td>
-				<td>{{c.status}}</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<br/>
-	
-	<div ng-show="!selectedContact">Nenhum contato selecionado</div>
-	<div ng-show="selectedContact">
-		Contato selecionado: [{{selectedContact.status}}] {{selectedContact.name}}
-		<br/>
-		<form method="post" ng-submit="submitEnviarMensagem()">
-			Enviar mensagem:<br /><br />
-			<div>
-			    <label for="userid">Mensagem:</label>
-			    <input type="text" id="content" ng-model="content" required />
-			</div>
-			<input type="submit" value="Enviar"/>
-		</form>
+	<div ng-show="!isLogged()">
+		Para acessar esta tela é necessário realizar login.
 	</div>
 
-	<br/>
-	
-	<div ng-show="!pendingMessages">Nenhuma mensagem pendente</div>
-	<div ng-show="pendingMessages">
-		Mensagens pendentes:
-		<br/>
+	<div ng-show="isLogged()">
 		<table class="table">
 			<tbody>
-				<tr ng-repeat="m in pendingMessages" ng-click="readMessage(m, $index)">
-					<td>{{m.sender}} às {{m.date}}</td>
-					<td>{{m.content}}</td>
+				<tr ng-repeat="c in contacts" ng-click="selectContact(c)">
+					<td>{{c.userid}}</td>
+					<td>{{c.name}}</td>
+					<td>{{c.status}}</td>
 				</tr>
 			</tbody>
 		</table>
+	
+		<br/>
+		
+		<div ng-show="!selectedContact">Nenhum contato selecionado</div>
+		<div ng-show="selectedContact">
+			Contato selecionado: [{{selectedContact.status}}] {{selectedContact.name}}
+			<br/>
+			<form method="post" ng-submit="submitEnviarMensagem()">
+				Enviar mensagem:<br /><br />
+				<div>
+				    <label for="userid">Mensagem:</label>
+				    <input type="text" id="content" ng-model="content" required />
+				</div>
+				<input type="submit" value="Enviar"/>
+			</form>
+		</div>
+	
+		<br/>
+		
+		<div ng-show="!pendingMessages">Nenhuma mensagem pendente</div>
+		<div ng-show="pendingMessages">
+			Mensagens pendentes:
+			<br/>
+			<table class="table">
+				<tbody>
+					<tr ng-repeat="m in pendingMessages" ng-click="readMessage(m, $index)">
+						<td>{{m.sender}} às {{m.date}}</td>
+						<td>{{m.content}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 </div>

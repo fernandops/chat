@@ -83,6 +83,10 @@ angular.module('mostPopularListingsApp.contatos', ['ngRoute'])
 			}
 		}
 
+		$scope.isLogged = function() {
+			return SessionService.isLogged();
+		}
+
 		function carregarMensagensPendentes() {
 			$scope.pendingMessages = ApiService.pendingMessages;
 		}

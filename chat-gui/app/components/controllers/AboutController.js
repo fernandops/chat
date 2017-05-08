@@ -9,14 +9,18 @@ angular.module('mostPopularListingsApp.about', ['ngRoute'])
 
 // Routing configuration for this module
 .config(['$routeProvider',function($routeprovider){
-	$routeprovider.when('/about', {
+	$routeprovider.when('/register', {
 		controller: 'AboutController',
 		templateUrl: 'components/views/aboutView.html'
 	});
 }])
 
 // Controller definition for this module
-.controller('AboutController', ['$scope', function($scope) {
+.controller('AboutController', function($scope, ApiService) {
+
+	$scope.submitRegisterUser = function() {
+		$scope.ret = ApiService.submitRegisterUser($scope.userid, $scope.password, $scope.name, $scope.email);
+	};
 
 	// Just a housekeeping.
 	// In the init method we are declaring all the
@@ -30,4 +34,4 @@ angular.module('mostPopularListingsApp.about', ['ngRoute'])
 
 	this.message = "Hello About!";
 
-}]);
+});
